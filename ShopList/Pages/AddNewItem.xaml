@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopList.Pages.AddNewItem"
+             xmlns:local="clr-namespace:ShopList"
+             xmlns:viewmodel="clr-namespace:ShopList.Viewmodel"
+             xmlns:pages="clr-namespace:ShopList.Pages"
+             x:DataType="viewmodel:NewItemVM"
+             Title="Добавление товара"
+             Shell.TabBarIsVisible="False">
+
+    <Grid HorizontalOptions="Center"
+          VerticalOptions="StartAndExpand"
+          Padding="10"
+          RowSpacing="20"
+          RowDefinitions="Auto, *">
+
+        <SearchBar Placeholder="Введите название товара"
+                   FontSize="15"
+                   VerticalTextAlignment="Center"
+                   TextChanged="SearchBar_TextChanged"
+                   Grid.Row="0" />
+
+        <ScrollView VerticalOptions="FillAndExpand"
+                    VerticalScrollBarVisibility="Never"
+                    Grid.Row="1">
+            <VerticalStackLayout>
+                <!--<ListView x:Name="LV"
+                          RowHeight="70"
+                          ItemSelected="LV_ItemSelected">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type x:String}">
+                            <local:CustomViewCell SelectedBackgroundColor="LightSkyBlue">
+                                <Label FontSize="20"
+                                       Padding="20"
+                                       Text="{Binding .}"/>
+                            </local:CustomViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>-->
+                <CollectionView x:Name="CV"
+                                SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type x:String}">
+
+                            <Grid Padding="0,5">
+                                <Frame>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type pages:AddNewItem}}, Path=CV_ItemSelectedCommand}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                    <Label Text="{Binding .}"
+                                           FontSize="20" />
+                                </Frame>
+                            </Grid>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

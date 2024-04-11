@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopList.Pages.ItemInfo"
+             xmlns:viewmodel="clr-namespace:ShopList.Viewmodel"
+             x:DataType="viewmodel:ItemVM">
+    <VerticalStackLayout
+        VerticalOptions="Center">
+        
+        <Label Text="{Binding Item}"
+               Padding="20"
+               FontSize="30"
+               VerticalOptions="Start"
+               HorizontalOptions="Center" />
+        
+        <Grid ColumnDefinitions="*, 12*, *">
+            <Frame Grid.Column="1"
+                   HorizontalOptions="Fill">
+                <Editor FontSize="15"
+                        HeightRequest="200"
+                        Placeholder="Информация о товаре"/>
+            </Frame>
+        </Grid>
+
+        <Grid ColumnDefinitions="*, 6*, *, 6*, *"
+              RowDefinitions="50, Auto">
+            <Button Grid.Column="1"
+                    Grid.Row="1"
+                    Text="Отменить"
+                    BackgroundColor="DarkRed">
+                
+            </Button>
+            <Button Grid.Column="3"
+                    Grid.Row="1"
+                    Text="Сохранить">
+
+            </Button>
+        </Grid>
+
+    </VerticalStackLayout>  
+</ContentPage>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="ShopList.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:ShopList"
+       xmlns:pages="clr-namespace:ShopList.Pages"
+       Shell.FlyoutBehavior="Disabled"
+       Shell.BackgroundColor="#512BD4"
+       Shell.TitleColor="White">
+
+    <ShellContent Title="Loading"
+                  ContentTemplate="{DataTemplate pages:LoadingPage}"
+                  Route="LoadingPage" />
+
+    <ShellContent Title="Login"
+                  ContentTemplate="{DataTemplate pages:LoginPage}"
+                  Route="LoginPage" />
+
+    <TabBar>
+
+        <ShellContent Title="Списки"
+                      ContentTemplate="{DataTemplate local:MainPage}"
+                      Route="MainPage"
+                      Icon="list.png" />
+
+        <ShellContent Title="Профиль"
+                      ContentTemplate="{DataTemplate local:UserPage}"
+                      Route="UserPage"
+                      Icon="user.png" />
+
+    </TabBar>
+
+</Shell>

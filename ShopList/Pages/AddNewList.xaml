@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopList.Pages.AddNewList"
+             xmlns:viewmodel="clr-namespace:ShopList.Viewmodel"
+             x:DataType="viewmodel:NewListVM"
+             Title="Новый список"
+             Shell.TabBarIsVisible="False">
+
+    <VerticalStackLayout HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         Spacing="20">
+
+        <Entry Placeholder="{Binding Placehold}"
+               Text="{Binding NewListName}"
+               FontSize="20"
+               WidthRequest="300" />
+
+        <Button Text="Добавить"
+                Command="{Binding AddListCommand}" />
+
+    </VerticalStackLayout>
+</ContentPage>
