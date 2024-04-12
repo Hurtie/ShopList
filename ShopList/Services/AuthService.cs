@@ -1,4 +1,6 @@
-﻿namespace ShopList.Services
+﻿using ShopList.Database;
+
+namespace ShopList.Services
 {
     public class AuthService
     {
@@ -13,7 +15,7 @@
         }
         public bool Login(string login, string pass)
         {
-            if (login == "User-1" && pass == "1111")
+            if ()
             {
                 Preferences.Default.Set(AuthState, true);
                 return true;
