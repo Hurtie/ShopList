@@ -6,19 +6,28 @@ using ShopList.Database.Objects;
 
 namespace ShopList.Viewmodel
 {
-    [QueryProperty("Groups", "Groups")]
     public partial class NewListVM: ObservableObject
     {
         [ObservableProperty]
-        string newListName;
+        string newListName = string.Empty;
 
         [ObservableProperty]
-        string placehold = "Название";
+        string placehold = "Название списка";
 
-        [ObservableProperty]
-        ObservableCollection<Group> groups;
+        public static ObservableCollection<Group> Groups;
+
+        [ObservableProperty] 
+        ObservableCollection<string> groupNames = [];
 
         public static int SelectedID { get; set; }
+
+        public NewListVM()
+        {
+            foreach (Group group in Groups)
+            {
+                GroupNames.Add(group.Name);
+            }
+        }
 
         [RelayCommand]
         async Task AddList()
@@ -35,7 +44,7 @@ namespace ShopList.Viewmodel
             NewListName = string.Empty;
             Placehold = "Новый список добавлен!";
             await Task.Delay(1500);
-            Placehold = "Название";
+            Placehold = "Название списка";
         }
     }
 }

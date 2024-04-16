@@ -27,4 +27,14 @@ public partial class UserPage : ContentPage
 		_authService.Logout();
 		Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
     }
+    private async void DeleteButton_Clicked(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Удаление аккканута", "Вы действительно хотите удалить свой аккаунт?", "Удалить", "Отмена");
+        if (answer)
+        {
+            _authService.Logout();
+            await Queries.DeleteUser();
+            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+        }
+    }
 }

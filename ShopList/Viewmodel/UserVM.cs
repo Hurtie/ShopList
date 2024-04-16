@@ -27,12 +27,6 @@ namespace ShopList.Viewmodel
                 }
             }
         }
-
-        [RelayCommand]
-        void Delete(string s)
-        {
-            GroupNames.Remove(s);
-        }
         [RelayCommand]
         async Task Tap(string s)
         {

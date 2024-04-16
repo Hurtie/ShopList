@@ -87,19 +87,29 @@ namespace ShopList.Viewmodel
             }
             else
             {
-                var sendGroups = new Dictionary<string, object>() { {"Groups", userGroups } };
-                await Shell.Current.GoToAsync($"{nameof(AddNewList)}", sendGroups);
+                NewListVM.Groups = new ObservableCollection<Database.Objects.Group>(userGroups);
+                await Shell.Current.GoToAsync($"{nameof(AddNewList)}");
             }
         }
         [RelayCommand]
         async Task Create()
         {
-            await Shell.Current.GoToAsync($"{nameof(AddNewGroup)}");
+            await Shell.Current.GoToAsync($"{nameof(CreateNewGroup)}");
         }
         [RelayCommand]
-        void Delete(string s)
+        async Task Delete(string s)
         {
             Lists.Remove(s);
+            int id = 0;
+            foreach (Database.Objects.ShopList list in shopLists)
+            {
+                if (list.Name.Equals(s))
+                {
+                    id = list.Id;
+                    break;
+                }
+            }
+            await Queries.DeleteList(id);
         }
     }
 }

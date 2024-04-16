@@ -18,6 +18,7 @@
 
         <Grid RowDefinitions="Auto, Auto, Auto, Auto"
               ColumnDefinitions="Auto, Auto"
+              ColumnSpacing="10"
               RowSpacing="20">
             <Label x:Name="name"
                    VerticalOptions="Center"
@@ -35,6 +36,13 @@
             <Button Text="Выйти из аккаунта"
                     Clicked="Button_Clicked"
                     Grid.Row="2" />
+
+            <Button Text="Удалить аккаунт"
+                    BackgroundColor="DarkRed"
+                    Clicked="DeleteButton_Clicked"
+                    Grid.Row="2"
+                    Grid.Column="1"/>
+
         </Grid>
 
         <Grid RowDefinitions="Auto, *"
@@ -55,32 +63,16 @@
                                     ItemsSource="{Binding GroupNames}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type x:String}">
-                                <SwipeView Threshold="85">
-                                    <SwipeView.RightItems>
-                                        <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserVM}}, Path=DeleteCommand}"
-                                                       CommandParameter="{Binding .}">
-                                            <Frame BackgroundColor="Red"
-                                                   WidthRequest="100"
-                                                   HeightRequest="68"
-                                                   CornerRadius="10">
-                                                <Label Text="Удалить"
-                                                       VerticalOptions="Center"
-                                                       HorizontalOptions="Center"
-                                                       TextColor="White" />
-                                            </Frame>
-                                        </SwipeItemView>
-                                    </SwipeView.RightItems>
-                                    <Grid Padding="0,5">
-                                        <Frame>
-                                            <Frame.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserVM}}, Path=TapCommand}"
-                                                                      CommandParameter="{Binding .}" />
-                                            </Frame.GestureRecognizers>
-                                            <Label Text="{Binding .}"
-                                                   FontSize="20" />
-                                        </Frame>
-                                    </Grid>
-                                </SwipeView>
+                                <Grid Padding="0,5">
+                                    <Frame>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserVM}}, Path=TapCommand}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Frame.GestureRecognizers>
+                                        <Label Text="{Binding .}"
+                                               FontSize="20" />
+                                    </Frame>
+                                </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>

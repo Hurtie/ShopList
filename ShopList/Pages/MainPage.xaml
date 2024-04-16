@@ -8,7 +8,7 @@
 
     <Grid RowDefinitions="Auto, Auto, *"
           Padding="15"
-          RowSpacing="20">
+          RowSpacing="10">
 
         <Button Text="Новая группа"
                 Command="{Binding CreateCommand}"

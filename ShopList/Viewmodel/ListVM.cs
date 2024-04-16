@@ -41,9 +41,10 @@ namespace ShopList.Viewmodel
             await Shell.Current.GoToAsync($"{nameof(AddNewItem)}", passItems);
         }
         [RelayCommand]
-        void Delete(Item s)
+        async Task Delete(Item s)
         {
             Items.Remove(s);
+            await Queries.DeleteFromList(s.Id, listID);
         }
         [RelayCommand]
         async Task Tap(Item s)

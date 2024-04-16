@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ShopList.Pages.AddNewList"
+             x:Class="ShopList.Pages.CreateNewGroup"
              xmlns:viewmodel="clr-namespace:ShopList.Viewmodel"
-             x:DataType="viewmodel:NewListVM"
-             Title="Новый список"
+             x:DataType="viewmodel:NewGroupVM"
              Shell.TabBarIsVisible="False"
-             xmlns:objects="clr-namespace:ShopList.Database.Objects">
+             Title="Создание группы">
 
     <VerticalStackLayout HorizontalOptions="Center"
                          VerticalOptions="Center"
                          Spacing="20">
 
         <Entry Placeholder="{Binding Placehold}"
-               Text="{Binding NewListName}"
+               Text="{Binding NewGroupName}"
                FontSize="20"
                WidthRequest="300" />
 
-        <Picker ItemsSource="{Binding GroupNames}"
-                SelectedIndexChanged="Picker_SelectedIndexChanged"
-                x:Name="PickGroup" />
-
         <Button Text="Добавить"
-                Command="{Binding AddListCommand}" />
+                Command="{Binding AddGroupCommand}" />
 
     </VerticalStackLayout>
+
 </ContentPage>
