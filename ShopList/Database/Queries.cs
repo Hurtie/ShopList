@@ -286,5 +286,26 @@ namespace ShopList.Database
                 response.EnsureSuccessStatusCode();
             }
         }
+
+        public static async Task<List<Results>> Results()
+        {
+            List<Results> results = null;
+
+            if (await Init())
+            {
+                HttpResponseMessage response = await client.GetAsync($"{client.BaseAddress}results/{userData.Id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<List<Results>>();
+                    if (result is not null)
+                    {
+                        results = result;
+                    }
+                }
+            }
+
+
+            return results;
+        }
     }
 }

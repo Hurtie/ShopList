@@ -17,7 +17,7 @@
                Margin="5" />
 
         <Grid RowDefinitions="Auto, Auto, Auto, Auto"
-              ColumnDefinitions="Auto, Auto"
+              ColumnDefinitions="Auto, Auto, Auto"
               ColumnSpacing="10"
               RowSpacing="20">
             <Label x:Name="name"
@@ -42,6 +42,13 @@
                     Clicked="DeleteButton_Clicked"
                     Grid.Row="2"
                     Grid.Column="1"/>
+            
+            <Button Text="Создать отчёт"
+                    BackgroundColor="Green"
+                    Clicked="Results_Clicked"
+                    Grid.Row="2"
+                    Grid.Column="2" />
+
 
         </Grid>
 
