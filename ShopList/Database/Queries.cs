@@ -41,7 +41,7 @@ namespace ShopList.Database
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<User[]>();
-                    if (result is not null)
+                    if (result is not null && result.Length != 0)
                     {
                         userData = result[0];
                     }
@@ -57,7 +57,7 @@ namespace ShopList.Database
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<User[]>();
-                    if (result is not null)
+                    if (result is not null && result.Length != 0)
                     {
                         userData = result[0];
                     }
@@ -78,7 +78,7 @@ namespace ShopList.Database
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<List<Group>>();
-                    if (result is not null)
+                    if (result is not null && result.Count != 0)
                     {
                         groups = result;
                     }
@@ -97,7 +97,7 @@ namespace ShopList.Database
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<List<Objects.ShopList>>();
-                    if (result is not null)
+                    if (result is not null && result.Count != 0)
                     {
                         lists = result;
                     }
@@ -117,7 +117,7 @@ namespace ShopList.Database
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<List<Objects.ItemList>>();
-                    if (result is not null)
+                    if (result is not null && result.Count != 0)
                     {
                         items = result;
                     }
@@ -138,7 +138,7 @@ namespace ShopList.Database
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<List<Objects.User>>();
-                    if (result is not null)
+                    if (result is not null && result.Count != 0)
                     {
                         users = result;
                     }
@@ -159,7 +159,7 @@ namespace ShopList.Database
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<List<Item>>();
-                    if (result is not null)
+                    if (result is not null && result.Count != 0)
                     {
                         items = result;
                     }
@@ -297,7 +297,7 @@ namespace ShopList.Database
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<List<Results>>();
-                    if (result is not null)
+                    if (result is not null && result.Count != 0)
                     {
                         results = result;
                     }
