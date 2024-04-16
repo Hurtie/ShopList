@@ -8,7 +8,7 @@
                          Spacing="25"
                          VerticalOptions="Center"
                          HorizontalOptions="Center">
-        <Label Text="Регистрация/вход в аккаунт"
+        <Label Text="Вход в аккаунт"
                HorizontalOptions="Center"
                FontSize="25"
                HeightRequest="100" />
@@ -24,6 +24,10 @@
 
         <Button Text="Войти"
                 Clicked="Button_Clicked"
+                WidthRequest="300" />
+
+        <Button Text="Регистрация"
+                Clicked="Registration_Clicked"
                 WidthRequest="300" />
     </VerticalStackLayout>
 

@@ -52,7 +52,7 @@
                         VerticalScrollBarVisibility="Always">
                 <VerticalStackLayout>
                     <CollectionView SelectionMode="None"
-                                    ItemsSource="{Binding Groups}">
+                                    ItemsSource="{Binding GroupNames}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type x:String}">
                                 <SwipeView Threshold="85">
@@ -72,6 +72,10 @@
                                     </SwipeView.RightItems>
                                     <Grid Padding="0,5">
                                         <Frame>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserVM}}, Path=TapCommand}"
+                                                                      CommandParameter="{Binding .}" />
+                                            </Frame.GestureRecognizers>
                                             <Label Text="{Binding .}"
                                                    FontSize="20" />
                                         </Frame>

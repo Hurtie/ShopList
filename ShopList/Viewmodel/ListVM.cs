@@ -1,34 +1,69 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ShopList.Database;
+using ShopList.Database.Objects;
 using ShopList.Pages;
 
 namespace ShopList.Viewmodel
 {
     [QueryProperty("ListName", "ListName")]
-    [QueryProperty("Items", "Items")]
     public partial class ListVM: ObservableObject
     {
         [ObservableProperty]    
         string listName;
         [ObservableProperty]
-        ObservableCollection<string> items;
+        public static int listID;
+        [ObservableProperty]
+        ObservableCollection<Item> items = [];
+        List<Database.Objects.ItemList> itemList = [];
+        public ListVM()
+        {
+            LoadItems(listID);
+        }
+        public async void LoadItems(int listId)
+        {
+            itemList = await Queries.GetItems(listId);
+            if (itemList is not null)
+            {
+                foreach (Database.Objects.ItemList item in itemList)
+                {
+                    Items.Add(new Item { Name = item.Name });
+                }
+            }
+        }
+
         [RelayCommand]
         async Task Add()
         {
             var passItems = new Dictionary<string, object> { { "Items", Items } };
-
+            NewItemVM.ListId = listID;
             await Shell.Current.GoToAsync($"{nameof(AddNewItem)}", passItems);
         }
         [RelayCommand]
-        void Delete(string s)
+        void Delete(Item s)
         {
             Items.Remove(s);
         }
         [RelayCommand]
-        async Task Tap(string s)
+        async Task Tap(Item s)
         {
-            await Shell.Current.GoToAsync($"{nameof(ItemInfo)}?Item={s}");
+            string info = "";
+
+            foreach (Database.Objects.ItemList item in itemList)
+            {
+                if (item.Name == s.Name)
+                {
+                    info = item.Info;
+                    ItemVM.ListID = ListID;
+                    ItemVM.ItemID = item.Id;
+                    break;
+                }
+            }
+
+
+            var passItems = new Dictionary<string, object> { { "ItemName", s.Name }, { "ItemInfo", info } };
+            await Shell.Current.GoToAsync($"{nameof(ItemInfo)}", passItems);
         }
     }
 }

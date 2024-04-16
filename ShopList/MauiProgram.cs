@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using ShopList.Pages;
+#if ANDROID
 using ShopList.Platforms.Android;
+#endif
 using ShopList.Services;
 
 namespace ShopList
@@ -17,13 +19,13 @@ namespace ShopList
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-
-                builder.ConfigureMauiHandlers(handlers => {
 #if ANDROID
-                    handlers.AddHandler<CustomViewCell, CustomViewCellHandler>();
-#endif
-                }); 
+                builder.ConfigureMauiHandlers(handlers => {
 
+                    handlers.AddHandler<CustomViewCell, CustomViewCellHandler>();
+
+        }); 
+#endif
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

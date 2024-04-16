@@ -1,3 +1,4 @@
+using ShopList.Database;
 using ShopList.Services;
 
 namespace ShopList.Pages;
@@ -16,8 +17,11 @@ public partial class LoadingPage : ContentPage
     {
         base.OnNavigatedTo(args);
 
+        Preferences.Default.Remove("AuthState");
+
         if (await _authService.IsAuthenticatedAsync())
         {
+            await Queries.LoadUser(Preferences.Default.Get("userID", ""));
             await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
         }
         else

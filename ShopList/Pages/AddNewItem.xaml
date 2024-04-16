@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:ShopList"
              xmlns:viewmodel="clr-namespace:ShopList.Viewmodel"
              xmlns:pages="clr-namespace:ShopList.Pages"
+             xmlns:objects="clr-namespace:ShopList.Database.Objects"
              x:DataType="viewmodel:NewItemVM"
              Title="Добавление товара"
              Shell.TabBarIsVisible="False">
@@ -25,19 +26,6 @@
                     VerticalScrollBarVisibility="Never"
                     Grid.Row="1">
             <VerticalStackLayout>
-                <!--<ListView x:Name="LV"
-                          RowHeight="70"
-                          ItemSelected="LV_ItemSelected">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type x:String}">
-                            <local:CustomViewCell SelectedBackgroundColor="LightSkyBlue">
-                                <Label FontSize="20"
-                                       Padding="20"
-                                       Text="{Binding .}"/>
-                            </local:CustomViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>-->
                 <CollectionView x:Name="CV"
                                 SelectionMode="None">
                     <CollectionView.ItemTemplate>
@@ -49,7 +37,8 @@
                                         <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type pages:AddNewItem}}, Path=CV_ItemSelectedCommand}"
                                                               CommandParameter="{Binding .}" />
                                     </Frame.GestureRecognizers>
-                                    <Label Text="{Binding .}"
+                                    <Label x:DataType="objects:Item"
+                                           Text="{Binding Name}"
                                            FontSize="20" />
                                 </Frame>
                             </Grid>

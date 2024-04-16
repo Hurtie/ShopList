@@ -9,4 +9,9 @@ public partial class AddNewList : ContentPage
 		InitializeComponent();
 		BindingContext = new NewListVM();
 	}
+
+    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+		NewListVM.SelectedID = PickGroup.SelectedIndex;
+    }
 }

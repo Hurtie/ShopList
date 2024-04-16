@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ShopList.Database.Objects;
 using ShopList.Viewmodel;
 
 namespace ShopList.Pages;
 
 public partial class AddNewItem : ContentPage
 {
-	ObservableCollection<string> found;
+	ObservableCollection<Item> found;
 	NewItemVM vm = new NewItemVM();
 	public AddNewItem()
 	{
@@ -18,24 +19,19 @@ public partial class AddNewItem : ContentPage
 
 	private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
 	{
-		found = new ObservableCollection<string>(NewItemVM.SearchItems(((SearchBar)sender).Text));
+		found = new ObservableCollection<Item>(NewItemVM.SearchItems(((SearchBar)sender).Text));
 		CV.ItemsSource = found;
 	}
 	[RelayCommand]
-	private async void CV_ItemSelected(string s)
+	private async Task CV_ItemSelected(Item s)
 	{
-		if (vm.AddItem(s))
+		if (await vm.AddItem(s))
 		{
 			await DisplayAlert("Ошибка", "Товар уже есть в списке", "OK");
 		}
 		else
 		{
-			await Shell.Current.GoToAsync($"{nameof(ItemInfo)}?Item={s}");
+			await Shell.Current.GoToAsync($"{nameof(ItemInfo)}?ItemName={s.Name}");
 		}
 	}
-    [RelayCommand]
-    void Delete(string s)
-    {
-		
-    }
 }

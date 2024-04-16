@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using ShopList.Database;
+using ShopList.Database.Objects;
 
 namespace ShopList.Viewmodel
 {
@@ -8,23 +9,38 @@ namespace ShopList.Viewmodel
     public partial class NewItemVM: ObservableObject
     {
         [ObservableProperty]
-        ObservableCollection<string> items;
-
-        readonly static string[] all = ["Молоко", "Сыр", "Бумага", "Чернила", "Мел"];
-
-        public bool AddItem(string item)
+        ObservableCollection<Item> items;
+        public static int ListId { get; set; }
+        static List<Item> all = [];
+        public NewItemVM()
+        {
+            LoadItems();
+        }
+        static async void LoadItems()
+        {
+            all.Clear();
+            List<Item> res = await Queries.LoadItems();
+            if (res is not null)
+            {
+                all = res;
+            }
+        }
+        public async Task<bool> AddItem(Item item)
         {
             if (!Items.Contains(item))
             {
                 Items.Add(item);
+                await Queries.AddItemToList(ListId, item.Id);
+                ItemVM.ItemID = item.Id;
+                ItemVM.ListID = ListId;
                 return false;
             }
             return true;
         }
 
-        public static List<string> SearchItems(string text)
+        public static List<Item> SearchItems(string text)
         {
-            var found = all.Where(x => x.StartsWith(text, StringComparison.OrdinalIgnoreCase)).ToList();
+            var found = all.Where(x => x.Name.StartsWith(text, StringComparison.OrdinalIgnoreCase)).ToList();
             return found;
         }
     }

@@ -6,19 +6,13 @@
              x:DataType="viewmodel:MainVM"
              Title="Списки">
 
-    <Grid RowDefinitions="50, Auto, *"
+    <Grid RowDefinitions="Auto, Auto, *"
           Padding="15"
           RowSpacing="20">
 
-        <Picker Title="Выбор группы"
-                Grid.Row="0">
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Личное</x:String>
-                    <x:String>Семья</x:String>
-                </x:Array>
-            </Picker.ItemsSource>
-        </Picker>
+        <Button Text="Новая группа"
+                Command="{Binding CreateCommand}"
+                Grid.Row="0" />
 
         <Button Text="Новый список"
                 Command="{Binding AddCommand}"
@@ -28,7 +22,7 @@
                     Grid.Row="2"
                     VerticalScrollBarVisibility="Never">
             <VerticalStackLayout>
-                <CollectionView ItemsSource="{Binding List}"
+                <CollectionView ItemsSource="{Binding Lists}"
                                 SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="{x:Type x:String}">

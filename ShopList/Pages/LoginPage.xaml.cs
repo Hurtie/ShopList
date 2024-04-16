@@ -13,7 +13,7 @@ public partial class LoginPage : ContentPage
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
-	    if(_authService.Login(Login.Text, Password.Text))
+	    if(await _authService.Login(Login.Text, Password.Text))
 		{
             await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
 			Login.Text = string.Empty;
@@ -24,4 +24,9 @@ public partial class LoginPage : ContentPage
 			await DisplayAlert("ќшибка", "¬веЄден неверный логин или пароль", "OK");
 		}
     }
+
+	private async void Registration_Clicked(object sender, EventArgs e)
+	{
+		await Shell.Current.GoToAsync($"{nameof(RegistrationPage)}");
+	}
 }

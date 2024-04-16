@@ -12,6 +12,8 @@ namespace ShopList
             Routing.RegisterRoute(nameof(AddNewList), typeof(AddNewList));
             Routing.RegisterRoute(nameof(AddNewItem), typeof(AddNewItem));
             Routing.RegisterRoute(nameof(ItemInfo), typeof(ItemInfo));
+            Routing.RegisterRoute(nameof(UsersInGroup), typeof(UsersInGroup));
+            Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
         }
     }
 }

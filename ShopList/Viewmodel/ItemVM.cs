@@ -1,11 +1,26 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using ShopList.Database;
 
 namespace ShopList.Viewmodel
 {
-    [QueryProperty("Item", "Item")]
+    [QueryProperty("ItemName", "ItemName")]
+    [QueryProperty("ItemInfo", "ItemInfo")]
     public partial class ItemVM : ObservableObject
     {
         [ObservableProperty]
-        string _item;
+        string itemName;
+        [ObservableProperty]
+        string itemInfo;
+        public static int ItemID { get; set; }
+        public static int ListID { get; set; }
+        [RelayCommand]
+        async Task Save()
+        {
+            if (!string.IsNullOrEmpty(ItemInfo))
+            {
+                await Queries.UpdateItem(ListID, ItemID, ItemInfo);
+            }
+        }
     }
 }

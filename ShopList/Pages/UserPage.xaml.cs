@@ -1,3 +1,4 @@
+using ShopList.Database;
 using ShopList.Pages;
 using ShopList.Services;
 using ShopList.Viewmodel;
@@ -16,8 +17,9 @@ public partial class UserPage : ContentPage
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        name.Text = "User-1";
-        ID.Text = "ID: 0001";
+        BindingContext = new UserVM();
+        name.Text = Queries.userData.Name;
+        ID.Text = $"ID: {Queries.userData.Id}";
     }
 
     private void Button_Clicked(object sender, EventArgs e)

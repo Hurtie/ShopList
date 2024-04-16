@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ShopList.Database;
+using ShopList.Database.Objects;
 
 namespace ShopList.Viewmodel
 {
-    [QueryProperty("List", "List")]
+    [QueryProperty("Groups", "Groups")]
     public partial class NewListVM: ObservableObject
     {
         [ObservableProperty]
@@ -14,16 +16,22 @@ namespace ShopList.Viewmodel
         string placehold = "Название";
 
         [ObservableProperty]
-        ObservableCollection<string> list;
+        ObservableCollection<Group> groups;
+
+        public static int SelectedID { get; set; }
 
         [RelayCommand]
-        async void AddList()
+        async Task AddList()
         { 
             if (string.IsNullOrWhiteSpace(NewListName))
             {
                 return;
             }
-            List.Add(NewListName);
+            if (SelectedID == -1)
+            {
+                await Application.Current.MainPage.DisplayAlert("Не выбрана группа", "Выберите группу для которой создаёте список", "OK");
+            }
+            await Queries.CreateList(NewListName, Groups[SelectedID].Id);
             NewListName = string.Empty;
             Placehold = "Новый список добавлен!";
             await Task.Delay(1500);

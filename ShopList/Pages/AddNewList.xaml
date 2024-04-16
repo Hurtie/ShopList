@@ -5,7 +5,8 @@
              xmlns:viewmodel="clr-namespace:ShopList.Viewmodel"
              x:DataType="viewmodel:NewListVM"
              Title="Новый список"
-             Shell.TabBarIsVisible="False">
+             Shell.TabBarIsVisible="False"
+             xmlns:objects="clr-namespace:ShopList.Database.Objects">
 
     <VerticalStackLayout HorizontalOptions="Center"
                          VerticalOptions="Center"
@@ -15,6 +16,13 @@
                Text="{Binding NewListName}"
                FontSize="20"
                WidthRequest="300" />
+
+        <Picker ItemsSource="{Binding Groups}"
+                SelectedIndexChanged="Picker_SelectedIndexChanged"
+                x:Name="PickGroup">
+            <Picker.Items x:DataType="objects:Group" />
+        </Picker>
+
 
         <Button Text="Добавить"
                 Command="{Binding AddListCommand}" />

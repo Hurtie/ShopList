@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ShopList.Pages;
+using ShopList.Database.Objects;
 using System.Collections.ObjectModel;
+using ShopList.Database;
 
 namespace ShopList.Viewmodel
 {
@@ -9,47 +11,95 @@ namespace ShopList.Viewmodel
     public partial class MainVM : ObservableObject
     {
         [ObservableProperty]
-        ObservableCollection<string> list;
-        ObservableCollection<string> Items;
+        ObservableCollection<string> lists = [];
+        [ObservableProperty]
+        ObservableCollection<string> groupNames = [];
+        List<Database.Objects.Group> userGroups = [];
+        List<Database.Objects.ShopList> shopLists = [];
         public MainVM()
         {
-            List = ["Продукты", "Для печати"];
+            LoadGroups(Queries.userData.Id);
         }
-        public void LoadList(string list)
+        public async void LoadLists(List<int> groupIds)
         {
-            switch (list)
+            Lists.Clear();
+
+            foreach (int id in groupIds)
             {
-                case "Продукты":
-                    Items = ["Молоко", "Сыр"];
-                    break;
-
-                case "Для печати":
-                    Items = ["Бумага", "Чернила"];
-                    break;
-
-                default:
-                    break;
+                List<Database.Objects.ShopList> SL = await Queries.GetLists(id);
+                shopLists.AddRange(SL);
             }
+
+            if (shopLists is not null)
+            {
+                foreach (Database.Objects.ShopList list in shopLists)
+                {
+                    Lists.Add(list.Name);
+                }
+            }
+        }
+
+        public async void LoadGroups(int userId)
+        {
+            GroupNames.Clear();
+            userGroups.Clear();
+
+            userGroups = await Queries.GetGroups(userId);
+            if (userGroups is not null)
+            {
+                foreach (Group group in userGroups)
+                {
+                    GroupNames.Add(group.Name);
+                }
+            }
+
+            List<int> groupIds = new List<int>();
+            foreach (Database.Objects.Group group in userGroups)
+            {
+                groupIds.Add(group.Id);
+            }
+
+            LoadLists(groupIds);
         }
 
         [RelayCommand]
         async Task Tap(string s)
         {
-            LoadList(s);
-            var send = new Dictionary<string, object> { { "ListName", s }, { "Items", Items } };
+            int id = 0;
+            foreach (Database.Objects.ShopList list in shopLists)
+            {
+                if (list.Name == s)
+                {
+                    id = list.Id;
+                    break;
+                }
+            }
+            var send = new Dictionary<string, object> { { "ListName", s }};
+            ListVM.listID = id;
             await Shell.Current.GoToAsync($"{nameof(ViewList)}", send);
         }
         [RelayCommand]
         async Task Add()
         {
-            var passList = new Dictionary<string, object> { { "List", List } };
-
-            await Shell.Current.GoToAsync($"{nameof(AddNewList)}", passList);
+            if (userGroups.Count < 1)
+            {
+                await Application.Current.MainPage.DisplayAlert("Нет доступных групп", "Сначала создайте хотя бы одну группу", "ОК");
+            }
+            else
+            {
+                var sendGroups = new Dictionary<string, object>() { {"Groups", userGroups } };
+                await Shell.Current.GoToAsync($"{nameof(AddNewList)}", sendGroups);
+            }
+        }
+        [RelayCommand]
+        async Task Create()
+        {
+            await Shell.Current.GoToAsync($"{nameof(AddNewGroup)}");
         }
         [RelayCommand]
         void Delete(string s)
         {
-            List.Remove(s);
+            Lists.Remove(s);
         }
     }
 }

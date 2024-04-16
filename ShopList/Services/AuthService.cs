@@ -1,8 +1,12 @@
-﻿namespace ShopList.Services
+﻿using Microsoft.AspNet.Identity;
+using ShopList.Database;
+
+namespace ShopList.Services
 {
     public class AuthService
     {
         private const string AuthState = "AuthState";
+        private const string id = "userID";
         public async Task<bool> IsAuthenticatedAsync()
         {
             await Task.Delay(2000);
@@ -11,13 +15,20 @@
 
             return authState;
         }
-        public bool Login(string login, string pass)
+
+        public async Task<bool> Login(string login, string pass)
         {
-            if (login == "User-1" && pass == "1111")
+            string check = await Queries.CheckUserAsync(login);
+            PasswordHasher pw = new PasswordHasher();
+
+
+            if (pw.VerifyHashedPassword(check, pass) == PasswordVerificationResult.Success)
             {
                 Preferences.Default.Set(AuthState, true);
+                Preferences.Default.Set(id, Queries.userData.Id);
                 return true;
             }
+
             return false;
         }
         public void Logout()

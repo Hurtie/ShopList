@@ -4,9 +4,11 @@ namespace ShopList.Pages;
 
 public partial class ViewList : ContentPage
 {
+	ListVM vm;
 	public ViewList()
 	{
         InitializeComponent();
-        BindingContext = new ListVM();
+        vm = new ListVM();
+		BindingContext = vm;
 	}
 }
