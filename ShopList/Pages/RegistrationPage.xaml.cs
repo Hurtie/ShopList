@@ -17,6 +17,10 @@ public partial class RegistrationPage : ContentPage
 
         try
         {
+            if ("" == await Queries.CheckUserAsync(Login.Text))
+            {
+                throw new Exception("Пользователь с данным логином уже зарегистриван");
+            }
             if (!Regex.IsMatch(Login.Text, loginPattern))
             {
                 throw new Exception("Ограничения логина:\n- 2-20 символов\n- Буквы латинского алфавита или цифры\n- Первый символ обязательно буква");
