@@ -15,11 +15,10 @@ namespace ShopList.Database
         {
             if (client.BaseAddress is null)
             {
-                client.BaseAddress = new Uri("http://localhost:3000");
+                client.BaseAddress = new Uri("http://localhost:3000/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
-                client.Timeout = TimeSpan.FromSeconds(5);
             }
             try
             {
@@ -60,10 +59,9 @@ namespace ShopList.Database
                     if (result is not null && result.Length != 0)
                     {
                         userData = result[0];
+                        return userData.Password;
                     }
                 }
-
-                return userData.Password;
             }
             return "";
         }
@@ -233,12 +231,19 @@ namespace ShopList.Database
 
         public static async Task AddUserToGroup(int userID, int groupID)
         {
-            if(await Init())
+            try
             {
-                UserGroup newUserGroup = new UserGroup() { UserId = userID, GroupID = groupID };
+                if (await Init())
+                {
+                    UserGroup newUserGroup = new UserGroup() { UserId = userID, GroupID = groupID };
 
-                HttpResponseMessage response = await client.PostAsJsonAsync($"{client.BaseAddress}usergroups", newUserGroup);
-                response.EnsureSuccessStatusCode();
+                    HttpResponseMessage response = await client.PostAsJsonAsync($"{client.BaseAddress}usergroups", newUserGroup);
+                    response.EnsureSuccessStatusCode();
+                }
+            }
+            catch
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка", $"Пользователь с ID {userID} не найден", "OK");
             }
         }
 

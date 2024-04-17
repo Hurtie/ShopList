@@ -32,6 +32,7 @@ public partial class UsersInGroup : ContentPage
 		else
 		{
 			await Queries.AddUserToGroup(id, GroupUsersVM.GroupID);
+			vm.Users = new System.Collections.ObjectModel.ObservableCollection<Database.Objects.User>(await Queries.GetGroupUsers(GroupUsersVM.GroupID));
 		}
     }
 

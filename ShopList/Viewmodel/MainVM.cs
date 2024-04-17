@@ -27,7 +27,10 @@ namespace ShopList.Viewmodel
             foreach (int id in groupIds)
             {
                 List<Database.Objects.ShopList> SL = await Queries.GetLists(id);
-                shopLists.AddRange(SL);
+                if (SL is not null)
+                {
+                    shopLists.AddRange(SL);
+                }
             }
 
             if (shopLists is not null)
@@ -50,16 +53,17 @@ namespace ShopList.Viewmodel
                 foreach (Group group in userGroups)
                 {
                     GroupNames.Add(group.Name);
+
                 }
-            }
 
-            List<int> groupIds = new List<int>();
-            foreach (Database.Objects.Group group in userGroups)
-            {
-                groupIds.Add(group.Id);
-            }
+                List<int> groupIds = new List<int>();
+                foreach (Database.Objects.Group group in userGroups)
+                {
+                    groupIds.Add(group.Id);
+                }
 
-            LoadLists(groupIds);
+                LoadLists(groupIds);
+            }
         }
 
         [RelayCommand]
@@ -81,7 +85,7 @@ namespace ShopList.Viewmodel
         [RelayCommand]
         async Task Add()
         {
-            if (userGroups.Count < 1)
+            if (userGroups is null || userGroups.Count < 1)
             {
                 await Application.Current.MainPage.DisplayAlert("Нет доступных групп", "Сначала создайте хотя бы одну группу", "ОК");
             }

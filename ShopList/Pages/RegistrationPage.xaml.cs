@@ -17,7 +17,7 @@ public partial class RegistrationPage : ContentPage
 
         try
         {
-            if ("" == await Queries.CheckUserAsync(Login.Text))
+            if ("" != await Queries.CheckUserAsync(Login.Text))
             {
                 throw new Exception("ѕользователь с данным логином уже зарегистриван");
             }

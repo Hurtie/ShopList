@@ -22,5 +22,11 @@ namespace ShopList.Viewmodel
                 await Queries.UpdateItem(ListID, ItemID, ItemInfo);
             }
         }
+        [RelayCommand]
+        async Task Delete()
+        {
+            await Queries.DeleteFromList(ItemID, ListID);
+            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+        }
     }
 }

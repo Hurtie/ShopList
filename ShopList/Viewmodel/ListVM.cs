@@ -47,6 +47,12 @@ namespace ShopList.Viewmodel
             await Queries.DeleteFromList(s.Id, listID);
         }
         [RelayCommand]
+        async Task DeleteList()
+        {
+            await Queries.DeleteList(listID);
+            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+        }
+        [RelayCommand]
         async Task Tap(Item s)
         {
             string info = "";

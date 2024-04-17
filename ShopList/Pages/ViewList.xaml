@@ -7,7 +7,7 @@
              x:DataType="viewmodel:ListVM"
              Title="{Binding ListName}">
 
-    <Grid RowDefinitions="Auto, *"
+    <Grid RowDefinitions="Auto, Auto, *"
           Padding="15"
           RowSpacing="20">
 
@@ -15,8 +15,12 @@
                 Grid.Row="0"
                 Command="{Binding AddCommand}" />
 
+        <Button Text="Удалить список"
+                Grid.Row="1"
+                Command="{Binding DeleteListCommand}"/>
+
         <ScrollView VerticalOptions="FillAndExpand"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     VerticalScrollBarVisibility="Never">
             <VerticalStackLayout>
                 <CollectionView ItemsSource="{Binding Items}"

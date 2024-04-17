@@ -21,7 +21,7 @@ public partial class LoginPage : ContentPage
         }
 		else
 		{
-			await DisplayAlert("ќшибка", "¬веЄден неверный логин или пароль", "OK");
+			await DisplayAlert("ќшибка", "¬ведЄн неверный логин или пароль", "OK");
 		}
     }
 

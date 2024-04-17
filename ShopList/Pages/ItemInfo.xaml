@@ -26,9 +26,11 @@
 
         <Button Text="Сохранить"
                 Command="{Binding SaveCommand}"
-                Margin="50">
+                Margin="50"/>
 
-        </Button>
+        <Button Text="Удалить"
+                Command="{Binding DeleteCommand}"
+                Margin="50" />
 
     </VerticalStackLayout>  
 </ContentPage>
